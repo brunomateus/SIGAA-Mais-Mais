@@ -14,13 +14,14 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 
 ### Vínculo favorito
 
-1. Faça login no SIGAA. Na tela de seleção de vínculos, cada vínculo exibe um botão **★ Favorito**.
-2. Clique no botão do vínculo desejado. Nos próximos logins, esse vínculo será selecionado automaticamente.
-3. Pelo ícone da extensão na barra do navegador, é possível:
-   - **Usar vínculo único automaticamente:** em vez de um favorito fixo, entra direto quando houver apenas um vínculo ativo.
-   - **Limpar favorito:** volta a exibir a tela de seleção normalmente.
+1. Faça login no SIGAA. No primeiro acesso, ao escolher um vínculo, a extensão pede confirmação para salvá-lo como favorito. A navegação só continua após a confirmação; ao cancelar, você permanece na tela de seleção.
+2. Nos próximos logins, o vínculo favorito é selecionado automaticamente.
+3. Para trocar o favorito, use o botão **★ Favorito** exibido ao lado de cada vínculo.
+4. Pelo ícone da extensão na barra do navegador, é possível:
+   - **Usar vínculo único automaticamente:** em vez de um favorito fixo, entra direto quando houver apenas um vínculo.
+   - **Limpar favorito:** volta ao comportamento do primeiro acesso.
 
-Vínculos inativos nunca são selecionados automaticamente.
+Vínculos ativos e inativos (já encerrados) são tratados da mesma forma.
 
 ## Requisitos
 
@@ -62,6 +63,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── vinculos.ts  # Content script da tela de vínculos
 │   ├── popup.ts     # Popup da extensão
 │   ├── favorito.ts  # Leitura e gravação do favorito (chrome.storage)
+│   ├── dialogo.ts   # Diálogo modal de confirmação
 │   └── util.ts      # Utilitários compartilhados
 ├── build.ts         # Script de build (esbuild)
 ├── tsconfig.json

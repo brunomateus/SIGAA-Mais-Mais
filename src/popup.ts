@@ -11,7 +11,7 @@ const atual = elemento("atual");
 async function render(): Promise<void> {
   const favorito = await lerFavorito();
   atual.textContent =
-    favorito === AUTO ? "Automático: entra quando houver um único vínculo ativo." :
+    favorito === AUTO ? "Automático: entra quando houver um único vínculo." :
     favorito ? `Favorito atual: ${favorito}` :
     "Nenhum favorito salvo ainda.";
 }
