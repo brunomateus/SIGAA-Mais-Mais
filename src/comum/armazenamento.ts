@@ -3,13 +3,21 @@ export interface Armazenamento {
   ler(chave: string): Promise<unknown>;
   gravar(chave: string, valor: unknown): Promise<void>;
   remover(chave: string): Promise<void>;
+  /** Chama `ouvinte` com o novo valor (ou `undefined`, se removido) sempre que `chave` mudar. */
+  aoMudar(chave: string, ouvinte: (valor: unknown) => void): void;
 }
+
+/** Mudanças de chaves, no formato de `chrome.storage.onChanged`. */
+export type MudancasNoArmazenamento = Record<string, { newValue?: unknown }>;
 
 /** O subconjunto de `chrome.storage.StorageArea` usado por `ArmazenamentoChrome`. */
 export interface AreaDeArmazenamentoChrome {
   get(chave: string): Promise<Record<string, unknown>>;
   set(itens: Record<string, unknown>): Promise<void>;
   remove(chave: string): Promise<void>;
+  onChanged: {
+    addListener(ouvinte: (mudancas: MudancasNoArmazenamento) => void): void;
+  };
 }
 
 /**
@@ -38,5 +46,12 @@ export class ArmazenamentoChrome implements Armazenamento {
 
   remover(chave: string): Promise<void> {
     return this.area.remove(chave);
+  }
+
+  aoMudar(chave: string, ouvinte: (valor: unknown) => void): void {
+    this.area.onChanged.addListener((mudancas) => {
+      const mudanca = mudancas[chave];
+      if (mudanca) ouvinte(mudanca.newValue);
+    });
   }
 }

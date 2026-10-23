@@ -34,6 +34,7 @@ describe("frequencia.css", () => {
   });
 
   afterEach(() => {
+    document.documentElement.removeAttribute("data-sigga-necessidades");
     document.head.innerHTML = "";
     document.body.innerHTML = "";
   });
@@ -62,5 +63,14 @@ describe("frequencia.css", () => {
       `<img id="fora" src="${ICONE}">`,
     );
     expect(exibicao("fora")).not.toBe("none");
+  });
+
+  it("mostra os indicadores quando o docente desliga a ocultação", () => {
+    document.documentElement.setAttribute(
+      "data-sigga-necessidades",
+      "visiveis",
+    );
+    expect(exibicao("icone")).not.toBe("none");
+    expect(exibicao("descricao")).not.toBe("none");
   });
 });

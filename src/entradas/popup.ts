@@ -1,7 +1,9 @@
-// Script do popup.html: localiza os elementos, monta as dependências reais e inicia o painel
+// Script do popup.html: localiza os elementos, monta as dependências reais e inicia os painéis
 import { ArmazenamentoChrome } from "../comum/armazenamento";
 import { RepositorioFavorito } from "../comum/favorito";
+import { PreferenciaPrivacidade } from "../comum/preferenciaPrivacidade";
 import { PainelPopup } from "../popup/painelPopup";
+import { PainelPrivacidade } from "../popup/painelPrivacidade";
 
 function elementoPorId<T extends HTMLElement>(
   id: string,
@@ -14,11 +16,14 @@ function elementoPorId<T extends HTMLElement>(
   );
 }
 
-const favoritos = new RepositorioFavorito(
-  new ArmazenamentoChrome(chrome.storage.local),
-);
+const armazenamento = new ArmazenamentoChrome(chrome.storage.local);
+const favoritos = new RepositorioFavorito(armazenamento);
 void new PainelPopup(favoritos, {
   status: elementoPorId("atual", HTMLElement),
   botaoAutomatico: elementoPorId("auto", HTMLButtonElement),
   botaoLimpar: elementoPorId("limpar", HTMLButtonElement),
 }).iniciar();
+void new PainelPrivacidade(
+  new PreferenciaPrivacidade(armazenamento),
+  elementoPorId("ocultar-necessidades", HTMLInputElement),
+).iniciar();

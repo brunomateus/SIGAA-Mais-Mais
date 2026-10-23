@@ -23,7 +23,9 @@
     {
       "matches": ["*://si3.ufc.br/sigaa/ava/FrequenciaAluno/form.jsf*"],
       "css": ["frequencia.css"],
-      "all_frames": true
+      "all_frames": true,
+      "js": ["frequencia.js"],
+      "run_at": "document_start"
     }
   ]
 }

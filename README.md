@@ -33,7 +33,9 @@ Logo após a escolha do vínculo, ao chegar à página inicial do SIGAA (`pagina
 
 ### Privacidade na lista de frequência
 
-Na tela de lançamento de frequência da turma virtual, os ícones e textos de necessidades especiais exibidos ao lado do nome dos alunos (ex.: "(Deficiência física)") ficam ocultos. Assim, a chamada pode ser feita com a tela projetada sem expor essa informação. Não é necessária nenhuma configuração.
+Na tela de lançamento de frequência da turma virtual, os ícones e textos de necessidades especiais exibidos ao lado do nome dos alunos (ex.: "(Deficiência física)") ficam ocultos. Assim, a chamada pode ser feita com a tela projetada sem expor essa informação.
+
+A ocultação vem ativada por padrão. Para ver os indicadores (por exemplo, ao planejar adaptações de atividades), desmarque **Ocultar indicadores de necessidades especiais** no popup da extensão. A mudança vale imediatamente, inclusive em uma lista de frequência já aberta.
 
 ## Requisitos
 
@@ -77,9 +79,10 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 ├── public/                # Arquivos estáticos copiados para dist/ (manifest.json, popup.html, CSS)
 ├── src/
 │   ├── entradas/          # Pontos de entrada: montam as dependências reais (chrome.storage, DOM)
-│   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, transição, utilitários
+│   ├── comum/             # Módulos compartilhados: armazenamento, preferências, diálogo, transição, utilitários
 │   ├── vinculos/          # Tela de seleção de vínculos
 │   ├── portal/            # Acesso direto ao Portal Docente
+│   ├── frequencia/        # Privacidade na lista de frequência
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/
 │   ├── fakes/             # Implementações falsas das dependências externas

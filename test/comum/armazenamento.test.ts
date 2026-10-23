@@ -24,3 +24,22 @@ describe("ArmazenamentoChrome", () => {
     expect(area.itens).toEqual({});
   });
 });
+
+describe("ArmazenamentoChrome.aoMudar", () => {
+  it("avisa o novo valor quando a chave observada é gravada ou removida", async () => {
+    const armazenamento = new ArmazenamentoChrome(new AreaChromeEmMemoria());
+    const valores: unknown[] = [];
+    armazenamento.aoMudar("chave", (valor) => valores.push(valor));
+    await armazenamento.gravar("chave", false);
+    await armazenamento.remover("chave");
+    expect(valores).toEqual([false, undefined]);
+  });
+
+  it("ignora mudanças em outras chaves", async () => {
+    const armazenamento = new ArmazenamentoChrome(new AreaChromeEmMemoria());
+    const valores: unknown[] = [];
+    armazenamento.aoMudar("chave", (valor) => valores.push(valor));
+    await armazenamento.gravar("outra", 1);
+    expect(valores).toEqual([]);
+  });
+});
