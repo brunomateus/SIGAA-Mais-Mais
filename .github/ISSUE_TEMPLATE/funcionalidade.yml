@@ -1,0 +1,79 @@
+name: Sugerir funcionalidade
+description: Proponha um novo atalho ou ajuste no SIGAA da UFC.
+title: "[Funcionalidade]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por sugerir uma melhoria para o Sigga++!
+
+        Antes de enviar, verifique se já existe uma [issue parecida](https://github.com/brunomateus/SIGAA-Mais-Mais/issues?q=is%3Aissue+label%3Aenhancement). Se existir, deixe um 👍 ou um comentário nela.
+
+        > **Atenção à privacidade:** não inclua nomes, matrículas, notas ou qualquer outro dado pessoal de alunos ou servidores, nem em textos, nem em capturas de tela.
+
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema você enfrenta?
+      description: Descreva a dificuldade no uso do SIGAA. Foque na situação, não na solução.
+      placeholder: "Ex.: Toda vez que faço login, preciso navegar por três telas até chegar às minhas turmas."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solucao
+    attributes:
+      label: Como a extensão poderia ajudar?
+      description: Descreva o comportamento que você gostaria de ver.
+      placeholder: "Ex.: Abrir direto a lista de turmas do semestre atual após o login."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: perfil
+    attributes:
+      label: Perfil de uso
+      description: Com qual vínculo você usa o SIGAA nessa situação?
+      options:
+        - Docente
+        - Discente
+        - Técnico-administrativo
+        - Outro
+    validations:
+      required: true
+
+  - type: input
+    id: tela
+    attributes:
+      label: Tela do SIGAA envolvida
+      description: Nome da tela ou endereço da página, sem parâmetros que identifiquem pessoas.
+      placeholder: "Ex.: Portal do Docente > Turmas > Lançar frequência (si3.ufc.br/sigaa/ava/FrequenciaAluno/form.jsf)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Como você contorna isso hoje?
+      description: Atalhos, favoritos do navegador, outras extensões ou passos manuais.
+    validations:
+      required: false
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Informações adicionais
+      description: Capturas de tela ajudam bastante. Antes de anexar, oculte nomes e quaisquer dados pessoais.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmacoes
+    attributes:
+      label: Confirmações
+      options:
+        - label: Procurei nas issues existentes e não encontrei uma sugestão igual.
+          required: true
+        - label: Não incluí dados pessoais de alunos ou servidores nesta sugestão.
+          required: true

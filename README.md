@@ -104,6 +104,14 @@ Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois con
 
 Ajustes puramente visuais dispensam TypeScript: crie o arquivo em `public/<nome>.css` e registre-o no campo `css` de um content script do manifest, como em `frequencia.css`. O Chrome aplica o estilo antes da renderização da página.
 
+## Sugerir funcionalidades
+
+Sugestões de novas funcionalidades são bem-vindas! O caminho oficial é abrir uma issue com o modelo [**Sugerir funcionalidade**](https://github.com/brunomateus/SIGAA-Mais-Mais/issues/new?template=funcionalidade.yml).
+
+O formulário pede o problema que você enfrenta no SIGAA, como a extensão poderia ajudar e o seu perfil de uso (docente, discente etc.). Antes de abrir, verifique se já não existe uma [sugestão parecida](https://github.com/brunomateus/SIGAA-Mais-Mais/issues?q=is%3Aissue+label%3Aenhancement); se existir, apoie-a com um 👍.
+
+> Não inclua dados pessoais de alunos ou servidores (nomes, matrículas, notas) nas sugestões nem nas capturas de tela.
+
 ## Tecnologias
 
 - [TypeScript](https://www.typescriptlang.org/)
