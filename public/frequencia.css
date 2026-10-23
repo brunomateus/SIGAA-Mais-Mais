@@ -1,0 +1,15 @@
+/*
+ * Lista de frequência (FrequenciaAluno/form.jsf): oculta os indicadores de
+ * necessidades especiais ao lado do nome dos alunos, para não expor essa
+ * informação ao fazer a chamada (ex.: com a tela projetada).
+ * Aplicado pelo manifest antes da renderização, sem JavaScript.
+ */
+
+/* Ícone, identificado pelo caminho da imagem */
+#frequencia td img[src*="/sigaa/img/necessidades_especiais/"],
+/* Texto descritivo logo após o ícone, ex.: "(Deficiência física)" */
+#frequencia td img[src*="/sigaa/img/necessidades_especiais/"] + span,
+/* Contêiner que fica vazio, para não deixar espaçamento */
+#frequencia td div:empty {
+  display: none !important;
+}

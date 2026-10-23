@@ -8,7 +8,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 
 - [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
 - [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
-- [ ] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
+- [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
 
@@ -30,6 +30,10 @@ Logo após a escolha do vínculo, ao chegar à página inicial do SIGAA (`pagina
 - O redirecionamento só acontece se a página inicial oferecer o link para o Portal do Docente, ou seja, para usuários com acesso a ele.
 - Ele ocorre apenas uma vez por login: se depois você voltar à página inicial (por exemplo, pelo menu **Módulos**), ela abre normalmente.
 - O redirecionamento depende da passagem pela tela de seleção de vínculos nesta aba.
+
+### Privacidade na lista de frequência
+
+Na tela de lançamento de frequência da turma virtual, os ícones e textos de necessidades especiais exibidos ao lado do nome dos alunos (ex.: "(Deficiência física)") ficam ocultos. Assim, a chamada pode ser feita com a tela projetada sem expor essa informação. Não é necessária nenhuma configuração.
 
 ## Requisitos
 
@@ -70,7 +74,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 ### Estrutura do projeto
 
 ```
-├── public/                # Arquivos estáticos copiados para dist/ (manifest.json, popup.html)
+├── public/                # Arquivos estáticos copiados para dist/ (manifest.json, popup.html, CSS)
 ├── src/
 │   ├── entradas/          # Pontos de entrada: montam as dependências reais (chrome.storage, DOM)
 │   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, transição, utilitários
@@ -94,6 +98,8 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 5. Escreva os testes em `test/<funcionalidade>/`, usando os fakes de `test/fakes/`.
 
 Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois content scripts não suportam módulos ES.
+
+Ajustes puramente visuais dispensam TypeScript: crie o arquivo em `public/<nome>.css` e registre-o no campo `css` de um content script do manifest, como em `frequencia.css`. O Chrome aplica o estilo antes da renderização da página.
 
 ## Tecnologias
 
