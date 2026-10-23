@@ -1,4 +1,4 @@
-import type { ArmazenamentoDaAba } from "../../src/comum/sinalPosLogin";
+import type { ArmazenamentoDaAba } from "../../src/comum/armazenamento";
 
 /** Imita o `sessionStorage` (`getItem`/`setItem`/`removeItem`) em memória. */
 export class ArmazenamentoDaAbaEmMemoria implements ArmazenamentoDaAba {

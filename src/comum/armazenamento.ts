@@ -7,6 +7,12 @@ export interface Armazenamento {
   aoMudar(chave: string, ouvinte: (valor: unknown) => void): void;
 }
 
+/** O subconjunto síncrono da Web Storage API (`sessionStorage`): por aba e por origem. */
+export type ArmazenamentoDaAba = Pick<
+  Storage,
+  "getItem" | "setItem" | "removeItem"
+>;
+
 /** Mudanças de chaves, no formato de `chrome.storage.onChanged`. */
 export type MudancasNoArmazenamento = Record<string, { newValue?: unknown }>;
 

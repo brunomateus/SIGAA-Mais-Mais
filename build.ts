@@ -8,6 +8,7 @@ const entryPoints: string[] = [
   "src/entradas/popup.ts",
   "src/entradas/paginaInicial.ts",
   "src/entradas/frequencia.ts",
+  "src/entradas/chamada.ts",
 ];
 
 const options: esbuild.BuildOptions = {

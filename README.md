@@ -8,6 +8,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 
 - [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
 - [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
+- [x] **Atalhos para a chamada:** a partir da página da turma, abre a chamada de hoje ou o calendário, pulando a seleção de subturma quando há apenas uma.
 - [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
@@ -30,6 +31,15 @@ Logo após a escolha do vínculo, ao chegar à página inicial do SIGAA (`pagina
 - O redirecionamento só acontece se a página inicial oferecer o link para o Portal do Docente, ou seja, para usuários com acesso a ele.
 - Ele ocorre apenas uma vez por login: se depois você voltar à página inicial (por exemplo, pelo menu **Módulos**), ela abre normalmente.
 - O redirecionamento depende da passagem pela tela de seleção de vínculos nesta aba.
+
+### Atalhos para a chamada
+
+Na página de uma turma virtual, dois botões aparecem acima das notícias e dos tópicos:
+
+- **Chamada de hoje:** abre direto a lista de alunos da data de hoje. Se hoje não for data de aula da turma, o calendário de chamada é exibido com um aviso. Se a chamada de hoje já tiver sido registrada, ela é aberta para edição.
+- **Chamada em outra data:** abre o calendário de chamada para escolher a data.
+
+Quando a turma tem uma única subturma, a seleção de subturma é feita automaticamente, inclusive ao usar o menu **Alunos → Lançar Frequência**. Com mais de uma, a seleção aparece normalmente e, depois da escolha, o caminho continua até o destino escolhido.
 
 ### Privacidade na lista de frequência
 
@@ -82,6 +92,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── comum/             # Módulos compartilhados: armazenamento, preferências, diálogo, transição, utilitários
 │   ├── vinculos/          # Tela de seleção de vínculos
 │   ├── portal/            # Acesso direto ao Portal Docente
+│   ├── chamada/           # Atalhos para a chamada na turma virtual
 │   ├── frequencia/        # Privacidade na lista de frequência
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/

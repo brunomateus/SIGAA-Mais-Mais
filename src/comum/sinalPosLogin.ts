@@ -1,8 +1,4 @@
-/** O subconjunto da Web Storage API (`sessionStorage`) usado por `SinalPosLogin`. */
-export type ArmazenamentoDaAba = Pick<
-  Storage,
-  "getItem" | "setItem" | "removeItem"
->;
+import type { ArmazenamentoDaAba } from "./armazenamento";
 
 const CHAVE_SINAL = "sigga_pos_login";
 
