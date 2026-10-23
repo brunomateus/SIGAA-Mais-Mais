@@ -45,8 +45,8 @@ A ocultação vem ativada por padrão. Para ver os indicadores (por exemplo, ao 
 ## Instalação
 
 ```bash
-git clone <url-do-repositorio>
-cd Sigga++
+git clone https://github.com/brunomateus/SIGAA-Mais-Mais.git
+cd SIGAA-Mais-Mais
 npm install
 npm run build
 ```
@@ -104,13 +104,16 @@ Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois con
 
 Ajustes puramente visuais dispensam TypeScript: crie o arquivo em `public/<nome>.css` e registre-o no campo `css` de um content script do manifest, como em `frequencia.css`. O Chrome aplica o estilo antes da renderização da página.
 
-## Sugerir funcionalidades
+## Sugestões e problemas
 
-Sugestões de novas funcionalidades são bem-vindas! O caminho oficial é abrir uma issue com o modelo [**Sugerir funcionalidade**](https://github.com/brunomateus/SIGAA-Mais-Mais/issues/new?template=funcionalidade.yml).
+As issues do repositório são abertas apenas por formulário:
 
-O formulário pede o problema que você enfrenta no SIGAA, como a extensão poderia ajudar e o seu perfil de uso (docente, discente etc.). Antes de abrir, verifique se já não existe uma [sugestão parecida](https://github.com/brunomateus/SIGAA-Mais-Mais/issues?q=is%3Aissue+label%3Aenhancement); se existir, apoie-a com um 👍.
+- [**Sugerir funcionalidade**](https://github.com/brunomateus/SIGAA-Mais-Mais/issues/new?template=funcionalidade.yml): descreva o problema que você enfrenta no SIGAA, como a extensão poderia ajudar e o seu perfil de uso (docente, discente etc.).
+- [**Relatar problema**](https://github.com/brunomateus/SIGAA-Mais-Mais/issues/new?template=bug.yml): informe a funcionalidade afetada, os passos para reproduzir e as versões da extensão e do navegador.
 
-> Não inclua dados pessoais de alunos ou servidores (nomes, matrículas, notas) nas sugestões nem nas capturas de tela.
+Antes de abrir, verifique se já não existe uma [issue parecida](https://github.com/brunomateus/SIGAA-Mais-Mais/issues); se existir, apoie-a com um 👍.
+
+> Não inclua dados pessoais de alunos ou servidores (nomes, matrículas, notas) nas issues nem nas capturas de tela.
 
 ## Tecnologias
 
@@ -119,6 +122,10 @@ O formulário pede o problema que você enfrenta no SIGAA, como a extensão pode
 - [Vitest](https://vitest.dev/) + [jsdom](https://github.com/jsdom/jsdom)
 - [Prettier](https://prettier.io/)
 - [Chrome Extensions — Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo [LICENSE](LICENSE).
 
 ## Autor
 

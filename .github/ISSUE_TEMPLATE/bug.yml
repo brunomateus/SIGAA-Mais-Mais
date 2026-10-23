@@ -1,0 +1,101 @@
+name: Relatar problema
+description: Algo na extensão não funciona como deveria.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por ajudar a melhorar o Sigga++!
+
+        Antes de enviar, verifique se o problema já foi [relatado](https://github.com/brunomateus/SIGAA-Mais-Mais/issues?q=is%3Aissue+label%3Abug).
+
+        > **Atenção à privacidade:** não inclua nomes, matrículas, notas ou qualquer outro dado pessoal de alunos ou servidores, nem em textos, nem em capturas de tela.
+
+  - type: dropdown
+    id: funcionalidade
+    attributes:
+      label: Funcionalidade afetada
+      options:
+        - Vínculo favorito
+        - Acesso direto ao Portal Docente
+        - Privacidade na lista de frequência
+        - Popup da extensão
+        - Outra / não sei
+    validations:
+      required: true
+
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+      description: Descreva o problema e o que você esperava que acontecesse.
+      placeholder: 'Ex.: Depois de escolher o vínculo, a tela "Entrando como Servidor…" ficou parada até sumir, e continuei na tela de vínculos. Esperava entrar no portal.'
+    validations:
+      required: true
+
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      description: Passo a passo para o problema acontecer.
+      placeholder: |
+        1. Fazer login no SIGAA
+        2. Escolher o vínculo "Servidor"
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: tela
+    attributes:
+      label: Tela do SIGAA
+      description: Nome da tela ou endereço da página, sem parâmetros que identifiquem pessoas.
+      placeholder: "Ex.: si3.ufc.br/sigaa/vinculos.jsf"
+    validations:
+      required: false
+
+  - type: input
+    id: versao
+    attributes:
+      label: Versão da extensão
+      description: Exibida no card do Sigga++ em `chrome://extensions`.
+      placeholder: "Ex.: 0.3.0"
+    validations:
+      required: true
+
+  - type: input
+    id: navegador
+    attributes:
+      label: Navegador e versão
+      description: "Em `chrome://version` (ou equivalente) e sistema operacional."
+      placeholder: "Ex.: Chrome 141 no Windows 11"
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Mensagens de erro no console (opcional)
+      description: "Na página com problema, pressione F12, abra a aba Console e copie as mensagens em vermelho."
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Informações adicionais
+      description: Capturas de tela ajudam bastante. Antes de anexar, oculte nomes e quaisquer dados pessoais.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmacoes
+    attributes:
+      label: Confirmações
+      options:
+        - label: Procurei nas issues existentes e não encontrei um relato igual.
+          required: true
+        - label: Não incluí dados pessoais de alunos ou servidores neste relato.
+          required: true
