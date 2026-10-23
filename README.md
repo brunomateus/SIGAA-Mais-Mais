@@ -2,13 +2,25 @@
 
 Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](https://si3.ufc.br/sigaa/), com foco no fluxo de trabalho do docente.
 
-> **Status:** em desenvolvimento. A versão atual (`v0`) contém apenas a estrutura do projeto; as funcionalidades serão adicionadas nas próximas versões.
+> **Status:** em desenvolvimento.
 
-## Funcionalidades planejadas
+## Funcionalidades
 
-- [ ] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
+- [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
 - [ ] **Acesso direto ao Portal Docente:** pula a página inicial e abre o Portal do Docente.
 - [ ] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
+
+## Uso
+
+### Vínculo favorito
+
+1. Faça login no SIGAA. Na tela de seleção de vínculos, cada vínculo exibe um botão **★ Favorito**.
+2. Clique no botão do vínculo desejado. Nos próximos logins, esse vínculo será selecionado automaticamente.
+3. Pelo ícone da extensão na barra do navegador, é possível:
+   - **Usar vínculo único automaticamente:** em vez de um favorito fixo, entra direto quando houver apenas um vínculo ativo.
+   - **Limpar favorito:** volta a exibir a tela de seleção normalmente.
+
+Vínculos inativos nunca são selecionados automaticamente.
 
 ## Requisitos
 
@@ -47,6 +59,10 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 ```
 ├── public/          # Arquivos estáticos copiados para dist/ (manifest.json, HTML)
 ├── src/             # Código-fonte TypeScript
+│   ├── vinculos.ts  # Content script da tela de vínculos
+│   ├── popup.ts     # Popup da extensão
+│   ├── favorito.ts  # Leitura e gravação do favorito (chrome.storage)
+│   └── util.ts      # Utilitários compartilhados
 ├── build.ts         # Script de build (esbuild)
 ├── tsconfig.json
 └── package.json
