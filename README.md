@@ -7,7 +7,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 ## Funcionalidades
 
 - [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
-- [ ] **Acesso direto ao Portal Docente:** pula a página inicial e abre o Portal do Docente.
+- [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
 - [ ] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
@@ -22,6 +22,14 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
    - **Limpar favorito:** volta ao comportamento do primeiro acesso.
 
 Vínculos ativos e inativos (já encerrados) são tratados da mesma forma.
+
+### Acesso direto ao Portal Docente
+
+Logo após a escolha do vínculo, ao chegar à página inicial do SIGAA (`paginaInicial.do`), a extensão abre o Portal do Docente automaticamente, exibindo "Abrindo Portal do Docente…" durante a transição.
+
+- O redirecionamento só acontece se a página inicial oferecer o link para o Portal do Docente, ou seja, para usuários com acesso a ele.
+- Ele ocorre apenas uma vez por login: se depois você voltar à página inicial (por exemplo, pelo menu **Módulos**), ela abre normalmente.
+- O redirecionamento depende da passagem pela tela de seleção de vínculos nesta aba.
 
 ## Requisitos
 
@@ -67,6 +75,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── entradas/          # Pontos de entrada: montam as dependências reais (chrome.storage, DOM)
 │   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, transição, utilitários
 │   ├── vinculos/          # Tela de seleção de vínculos
+│   ├── portal/            # Acesso direto ao Portal Docente
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/
 │   ├── fakes/             # Implementações falsas das dependências externas

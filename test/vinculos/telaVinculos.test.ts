@@ -3,9 +3,11 @@ import {
   FAVORITO_AUTOMATICO,
   RepositorioFavorito,
 } from "../../src/comum/favorito";
+import { SinalPosLogin } from "../../src/comum/sinalPosLogin";
 import { encontrarVinculos } from "../../src/vinculos/listaVinculos";
 import { TelaVinculos } from "../../src/vinculos/telaVinculos";
 import { AnunciadorFalso } from "../fakes/AnunciadorFalso";
+import { ArmazenamentoDaAbaEmMemoria } from "../fakes/ArmazenamentoDaAbaEmMemoria";
 import { ArmazenamentoEmMemoria } from "../fakes/ArmazenamentoEmMemoria";
 import { ConfirmadorFalso } from "../fakes/ConfirmadorFalso";
 import {
@@ -28,17 +30,19 @@ async function abrirTela(
   if (favoritoSalvo) await favoritos.salvar(favoritoSalvo);
   const confirmador = new ConfirmadorFalso();
   const anunciador = new AnunciadorFalso();
+  const sinalPosLogin = new SinalPosLogin(new ArmazenamentoDaAbaEmMemoria());
   const dependencias = {
     favoritos,
     confirmar: confirmador.confirmar,
     anunciarTransicao: anunciador.anunciar,
+    sinalPosLogin,
     documento: pagina.documento,
   };
   await new TelaVinculos(
     encontrarVinculos(pagina.documento),
     dependencias,
   ).iniciar();
-  return { pagina, favoritos, confirmador, anunciador };
+  return { pagina, favoritos, confirmador, anunciador, sinalPosLogin };
 }
 
 const textosDosBotoes = (documento: Document) =>
@@ -156,5 +160,29 @@ describe("TelaVinculos no primeiro acesso (sem favorito)", () => {
     pagina.links[0]!.click();
     expect(confirmador.pedidos).toHaveLength(0);
     expect(pagina.navegacoes).toEqual(["Servidor"]);
+  });
+});
+
+describe("TelaVinculos: sinal pós-login", () => {
+  it("marca o sinal ao entrar automaticamente no favorito", async () => {
+    const { sinalPosLogin } = await abrirTela("Servidor");
+    expect(sinalPosLogin.consumir()).toBe(true);
+  });
+
+  it("no primeiro acesso, só marca o sinal depois da confirmação", async () => {
+    const { pagina, confirmador, sinalPosLogin } = await abrirTela();
+    pagina.links[0]!.click();
+    expect(sinalPosLogin.consumir()).toBe(false);
+    confirmador.responder(true);
+    await aguardarTarefasPendentes();
+    expect(sinalPosLogin.consumir()).toBe(true);
+  });
+
+  it("não marca o sinal ao cancelar a confirmação", async () => {
+    const { pagina, confirmador, sinalPosLogin } = await abrirTela();
+    pagina.links[0]!.click();
+    confirmador.responder(false);
+    await aguardarTarefasPendentes();
+    expect(sinalPosLogin.consumir()).toBe(false);
   });
 });

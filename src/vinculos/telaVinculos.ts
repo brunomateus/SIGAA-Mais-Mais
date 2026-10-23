@@ -1,5 +1,6 @@
 import type { Confirmador } from "../comum/dialogo";
 import type { RepositorioFavorito } from "../comum/favorito";
+import type { SinalPosLogin } from "../comum/sinalPosLogin";
 import { normalizarRotulo } from "../comum/texto";
 import type { AnunciadorDeTransicao } from "../comum/transicao";
 import {
@@ -17,13 +18,14 @@ export interface DependenciasTelaVinculos {
   favoritos: RepositorioFavorito;
   confirmar: Confirmador;
   anunciarTransicao: AnunciadorDeTransicao;
+  sinalPosLogin: SinalPosLogin;
   documento: Document;
 }
 
 /**
  * Comportamento da tela vinculos.jsf: botões "★ Favorito", entrada automática no
  * favorito, confirmação do favorito no primeiro acesso e aviso de transição a cada
- * entrada num vínculo.
+ * entrada num vínculo, deixando o sinal pós-login para a página seguinte.
  *
  * @example
  * await new TelaVinculos(encontrarVinculos(document), dependencias).iniciar();
@@ -81,6 +83,7 @@ export class TelaVinculos {
     const vinculo = this.vinculoClicado(evento.target);
     if (!vinculo) return;
     if (this.favoritoAtual) {
+      this.dependencias.sinalPosLogin.marcar();
       this.dependencias.anunciarTransicao(`Entrando como ${vinculo.rotulo}…`);
       return;
     }

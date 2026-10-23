@@ -6,6 +6,7 @@ import { cpSync, rmSync } from "node:fs";
 const entryPoints: string[] = [
   "src/entradas/vinculos.ts",
   "src/entradas/popup.ts",
+  "src/entradas/paginaInicial.ts",
 ];
 
 const options: esbuild.BuildOptions = {
