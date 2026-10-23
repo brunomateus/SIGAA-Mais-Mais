@@ -1,6 +1,7 @@
 import type { Confirmador } from "../comum/dialogo";
 import type { RepositorioFavorito } from "../comum/favorito";
 import { normalizarRotulo } from "../comum/texto";
+import type { AnunciadorDeTransicao } from "../comum/transicao";
 import {
   criarBotaoFavorito,
   marcarBotaoDoFavorito,
@@ -15,12 +16,14 @@ import {
 export interface DependenciasTelaVinculos {
   favoritos: RepositorioFavorito;
   confirmar: Confirmador;
+  anunciarTransicao: AnunciadorDeTransicao;
   documento: Document;
 }
 
 /**
  * Comportamento da tela vinculos.jsf: botões "★ Favorito", entrada automática no
- * favorito e, no primeiro acesso, confirmação do favorito antes de navegar.
+ * favorito, confirmação do favorito no primeiro acesso e aviso de transição a cada
+ * entrada num vínculo.
  *
  * @example
  * await new TelaVinculos(encontrarVinculos(document), dependencias).iniciar();
@@ -29,7 +32,6 @@ export class TelaVinculos {
   private readonly vinculos: Vinculo[];
   private readonly dependencias: DependenciasTelaVinculos;
   private favoritoAtual: string | undefined;
-  private navegacaoLiberada = false;
 
   constructor(vinculos: Vinculo[], dependencias: DependenciasTelaVinculos) {
     this.vinculos = vinculos;
@@ -42,7 +44,7 @@ export class TelaVinculos {
     // Captura no document: roda antes do onclick do SIGAA no próprio link
     this.dependencias.documento.addEventListener(
       "click",
-      (e) => this.exigirFavorito(e),
+      (e) => this.aoClicar(e),
       true,
     );
     selecionarVinculoAutomatico(
@@ -74,18 +76,20 @@ export class TelaVinculos {
     marcarBotaoDoFavorito(this.dependencias.documento, rotulo);
   }
 
-  private exigirFavorito(evento: MouseEvent): void {
-    const vinculo = this.vinculoSemFavoritoClicado(evento.target);
+  // Todo clique num vínculo passa por aqui, inclusive o automático e o liberado após confirmar
+  private aoClicar(evento: MouseEvent): void {
+    const vinculo = this.vinculoClicado(evento.target);
     if (!vinculo) return;
+    if (this.favoritoAtual) {
+      this.dependencias.anunciarTransicao(`Entrando como ${vinculo.rotulo}…`);
+      return;
+    }
     evento.preventDefault();
     evento.stopImmediatePropagation();
     void this.confirmarFavoritoEEntrar(vinculo);
   }
 
-  private vinculoSemFavoritoClicado(
-    alvo: EventTarget | null,
-  ): Vinculo | undefined {
-    if (this.favoritoAtual || this.navegacaoLiberada) return undefined;
+  private vinculoClicado(alvo: EventTarget | null): Vinculo | undefined {
     if (alvo instanceof Element && alvo.closest(SELETOR_BOTAO_FAVORITO))
       return undefined;
     return vinculoQueContem(this.vinculos, alvo);
@@ -101,7 +105,6 @@ export class TelaVinculos {
     });
     if (!confirmado) return;
     await this.definirFavorito(vinculo.rotulo);
-    this.navegacaoLiberada = true;
     vinculo.link.click();
   }
 }

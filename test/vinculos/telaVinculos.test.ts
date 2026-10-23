@@ -5,6 +5,7 @@ import {
 } from "../../src/comum/favorito";
 import { encontrarVinculos } from "../../src/vinculos/listaVinculos";
 import { TelaVinculos } from "../../src/vinculos/telaVinculos";
+import { AnunciadorFalso } from "../fakes/AnunciadorFalso";
 import { ArmazenamentoEmMemoria } from "../fakes/ArmazenamentoEmMemoria";
 import { ConfirmadorFalso } from "../fakes/ConfirmadorFalso";
 import {
@@ -26,16 +27,18 @@ async function abrirTela(
   const favoritos = new RepositorioFavorito(new ArmazenamentoEmMemoria());
   if (favoritoSalvo) await favoritos.salvar(favoritoSalvo);
   const confirmador = new ConfirmadorFalso();
+  const anunciador = new AnunciadorFalso();
   const dependencias = {
     favoritos,
     confirmar: confirmador.confirmar,
+    anunciarTransicao: anunciador.anunciar,
     documento: pagina.documento,
   };
   await new TelaVinculos(
     encontrarVinculos(pagina.documento),
     dependencias,
   ).iniciar();
-  return { pagina, favoritos, confirmador };
+  return { pagina, favoritos, confirmador, anunciador };
 }
 
 const textosDosBotoes = (documento: Document) =>
@@ -68,6 +71,43 @@ describe("TelaVinculos com favorito salvo", () => {
     pagina.links[1]!.click();
     expect(confirmador.pedidos).toHaveLength(0);
     expect(pagina.navegacoes).toEqual(["Discente"]);
+  });
+});
+
+describe("TelaVinculos: aviso de transição", () => {
+  it("anuncia a entrada automática no favorito", async () => {
+    const { anunciador } = await abrirTela("Servidor");
+    expect(anunciador.mensagens).toEqual(["Entrando como Servidor…"]);
+  });
+
+  it("anuncia antes de o clique chegar ao SIGAA", async () => {
+    const { pagina, anunciador } = await abrirTela(FAVORITO_AUTOMATICO);
+    let navegacoesNoAnuncio: string[] | undefined;
+    anunciador.aoAnunciar = () =>
+      (navegacoesNoAnuncio = [...pagina.navegacoes]);
+    pagina.links[1]!.click();
+    expect(anunciador.mensagens).toEqual(["Entrando como Discente…"]);
+    expect(navegacoesNoAnuncio).toEqual([]);
+    expect(pagina.navegacoes).toEqual(["Discente"]);
+  });
+
+  it("no primeiro acesso, só anuncia depois da confirmação", async () => {
+    const { pagina, confirmador, anunciador } = await abrirTela();
+    pagina.links[0]!.click();
+    expect(anunciador.mensagens).toEqual([]);
+    confirmador.responder(true);
+    await aguardarTarefasPendentes();
+    expect(anunciador.mensagens).toEqual(["Entrando como Servidor…"]);
+  });
+
+  it("não anuncia ao cancelar a confirmação nem ao clicar no botão ★", async () => {
+    const { pagina, confirmador, anunciador } = await abrirTela();
+    pagina.links[0]!.click();
+    confirmador.responder(false);
+    await aguardarTarefasPendentes();
+    pagina.documento.querySelectorAll("button")[0]!.click();
+    await aguardarTarefasPendentes();
+    expect(anunciador.mensagens).toEqual([]);
   });
 });
 

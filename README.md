@@ -15,7 +15,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 ### Vínculo favorito
 
 1. Faça login no SIGAA. No primeiro acesso, ao escolher um vínculo, a extensão pede confirmação para salvá-lo como favorito. A navegação só continua após a confirmação; ao cancelar, você permanece na tela de seleção.
-2. Nos próximos logins, o vínculo favorito é selecionado automaticamente.
+2. Nos próximos logins, o vínculo favorito é selecionado automaticamente. Ao entrar em um vínculo, uma tela de carregamento ("Entrando como …") indica a transição; se o SIGAA não responder em 10 segundos, ela é removida e a tela de seleção volta a ficar disponível.
 3. Para trocar o favorito, use o botão **★ Favorito** exibido ao lado de cada vínculo.
 4. Pelo ícone da extensão na barra do navegador, é possível:
    - **Usar vínculo único automaticamente:** em vez de um favorito fixo, entra direto quando houver apenas um vínculo.
@@ -65,7 +65,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 ├── public/                # Arquivos estáticos copiados para dist/ (manifest.json, popup.html)
 ├── src/
 │   ├── entradas/          # Pontos de entrada: montam as dependências reais (chrome.storage, DOM)
-│   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, utilitários
+│   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, transição, utilitários
 │   ├── vinculos/          # Tela de seleção de vínculos
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/

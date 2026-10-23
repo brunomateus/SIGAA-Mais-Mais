@@ -3,6 +3,7 @@ import { ArmazenamentoChrome } from "../comum/armazenamento";
 import { confirmarComDialogo } from "../comum/dialogo";
 import { tentarAteDomPronto } from "../comum/espera";
 import { RepositorioFavorito } from "../comum/favorito";
+import { mostrarTransicao } from "../comum/transicao";
 import { encontrarVinculos } from "../vinculos/listaVinculos";
 import { TelaVinculos } from "../vinculos/telaVinculos";
 
@@ -15,6 +16,7 @@ tentarAteDomPronto(() => {
   const tela = new TelaVinculos(vinculos, {
     favoritos,
     confirmar: confirmarComDialogo,
+    anunciarTransicao: (mensagem) => void mostrarTransicao(document, mensagem),
     documento: document,
   });
   void tela.iniciar();
