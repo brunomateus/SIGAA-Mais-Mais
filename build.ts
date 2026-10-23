@@ -2,10 +2,10 @@
 import * as esbuild from "esbuild";
 import { cpSync, rmSync } from "node:fs";
 
-// Cada funcionalidade acrescenta aqui o seu ponto de entrada: src/<nome>.ts → dist/<nome>.js
+// Cada funcionalidade acrescenta aqui o seu ponto de entrada: src/entradas/<nome>.ts → dist/<nome>.js
 const entryPoints: string[] = [
-  "src/vinculos.ts",
-  "src/popup.ts",
+  "src/entradas/vinculos.ts",
+  "src/entradas/popup.ts",
 ];
 
 const options: esbuild.BuildOptions = {

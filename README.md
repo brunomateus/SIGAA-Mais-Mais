@@ -45,11 +45,15 @@ Em seguida, carregue a extensão no navegador:
 
 ## Desenvolvimento
 
-| Comando             | Descrição                                          |
-| ------------------- | -------------------------------------------------- |
-| `npm run build`     | Gera a extensão em `dist/`                         |
-| `npm run watch`     | Recompila automaticamente ao alterar `src/`        |
-| `npm run typecheck` | Verifica os tipos com o compilador TypeScript      |
+| Comando                | Descrição                                     |
+| ---------------------- | --------------------------------------------- |
+| `npm run build`        | Gera a extensão em `dist/`                    |
+| `npm run watch`        | Recompila automaticamente ao alterar `src/`   |
+| `npm test`             | Executa os testes (Vitest + jsdom)            |
+| `npm run test:watch`   | Executa os testes em modo observação          |
+| `npm run typecheck`    | Verifica os tipos com o compilador TypeScript |
+| `npm run format`       | Formata o código com o Prettier               |
+| `npm run format:check` | Verifica a formatação sem alterar arquivos    |
 
 Depois de cada build, clique em **↻ Recarregar** no card da extensão em `chrome://extensions` e atualize a página do SIGAA.
 
@@ -58,23 +62,27 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 ### Estrutura do projeto
 
 ```
-├── public/          # Arquivos estáticos copiados para dist/ (manifest.json, HTML)
-├── src/             # Código-fonte TypeScript
-│   ├── vinculos.ts  # Content script da tela de vínculos
-│   ├── popup.ts     # Popup da extensão
-│   ├── favorito.ts  # Leitura e gravação do favorito (chrome.storage)
-│   ├── dialogo.ts   # Diálogo modal de confirmação
-│   └── util.ts      # Utilitários compartilhados
-├── build.ts         # Script de build (esbuild)
-├── tsconfig.json
-└── package.json
+├── public/                # Arquivos estáticos copiados para dist/ (manifest.json, popup.html)
+├── src/
+│   ├── entradas/          # Pontos de entrada: montam as dependências reais (chrome.storage, DOM)
+│   ├── comum/             # Módulos compartilhados: armazenamento, favorito, diálogo, utilitários
+│   ├── vinculos/          # Tela de seleção de vínculos
+│   └── popup/             # Popup da extensão
+├── test/                  # Testes, espelhando a estrutura de src/
+│   ├── fakes/             # Implementações falsas das dependências externas
+│   └── suporte/           # Utilitários de teste (página de vínculos simulada, <dialog> no jsdom)
+├── build.ts               # Script de build (esbuild)
+├── vitest.config.ts
+└── tsconfig.json
 ```
 
 ### Adicionando um novo script
 
-1. Crie o arquivo em `src/<nome>.ts`.
-2. Adicione `"src/<nome>.ts"` ao array `entryPoints` em `build.ts`.
-3. Registre `<nome>.js` no `public/manifest.json` (por exemplo, em `content_scripts`).
+1. Implemente a funcionalidade em `src/<funcionalidade>/`, recebendo as dependências externas (armazenamento, documento, diálogos) por construtor ou parâmetro.
+2. Crie o ponto de entrada em `src/entradas/<nome>.ts`, que monta as dependências reais e inicia a funcionalidade.
+3. Adicione `"src/entradas/<nome>.ts"` ao array `entryPoints` em `build.ts`.
+4. Registre `<nome>.js` no `public/manifest.json` (por exemplo, em `content_scripts`).
+5. Escreva os testes em `test/<funcionalidade>/`, usando os fakes de `test/fakes/`.
 
 Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois content scripts não suportam módulos ES.
 
@@ -82,6 +90,8 @@ Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois con
 
 - [TypeScript](https://www.typescriptlang.org/)
 - [esbuild](https://esbuild.github.io/)
+- [Vitest](https://vitest.dev/) + [jsdom](https://github.com/jsdom/jsdom)
+- [Prettier](https://prettier.io/)
 - [Chrome Extensions — Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
 
 ## Autor
