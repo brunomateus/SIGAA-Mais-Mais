@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Sigga++",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Atalhos e ajustes no SIGAA da UFC para o fluxo do docente.",
   "permissions": ["storage"],
   "action": {
@@ -28,7 +28,10 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["*://si3.ufc.br/sigaa/ava/*"],
+      "matches": [
+        "*://si3.ufc.br/sigaa/ava/*",
+        "*://si3.ufc.br/sigaa/portais/docente/*"
+      ],
       "js": ["chamada.js"],
       "run_at": "document_idle"
     }
