@@ -19,6 +19,8 @@ body:
       options:
         - Vínculo favorito
         - Acesso direto ao Portal Docente
+        - Atalhos para a chamada (botões na página da turma)
+        - Seleção automática de subturma
         - Privacidade na lista de frequência
         - Popup da extensão
         - Outra / não sei
