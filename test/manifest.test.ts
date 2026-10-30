@@ -42,3 +42,11 @@ describe("manifest: atalhos da chamada", () => {
     ).toContain("chamada.js");
   });
 });
+
+describe("manifest: remoção de tópicos de aula em lote", () => {
+  it("injeta topicos.js nas telas da turma virtual", () => {
+    expect(
+      scriptsInjetadosEm("https://si3.ufc.br/sigaa/ava/TopicoAula/listar.jsf"),
+    ).toContain("topicos.js");
+  });
+});

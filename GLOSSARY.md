@@ -26,6 +26,14 @@ _Avoid_: Grupo, seção
 Um dia do calendário da turma em que há aula e, portanto, chamada; uma turma tem no máximo uma aula por dia.
 _Avoid_: Dia letivo, encontro
 
+**Tópico de aula**:
+Um assunto da turma planejado pelo docente para um período (início e fim) e exibido na página da turma.
+_Avoid_: Conteúdo programado (é o nome da tela que lista os tópicos), aula
+
+**Material**:
+Um arquivo, tarefa, fórum ou outro recurso vinculado a um tópico de aula; deixa de existir quando o tópico é removido.
+_Avoid_: Anexo, recurso
+
 **Chamada**:
 O registro de presença dos alunos de uma turma em uma data de aula.
 _Avoid_: Lançar frequência, frequência (para o ato), presença
