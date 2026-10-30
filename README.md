@@ -9,6 +9,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 - [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
 - [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
 - [x] **Atalhos para a chamada:** a partir da página da turma, abre a chamada de hoje ou o calendário, pulando a seleção de subturma quando há apenas uma.
+- [x] **Remoção de tópicos de aula em lote:** na tela Conteúdo Programado, remove vários tópicos de aula de uma vez, com uma única atualização da página.
 - [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
@@ -40,6 +41,17 @@ Na página de uma turma virtual, dois botões aparecem acima das notícias e dos
 - **Chamada em outra data:** abre o calendário de chamada para escolher a data.
 
 Quando a turma tem uma única subturma, a seleção de subturma é feita automaticamente, inclusive ao usar o menu **Alunos → Lançar Frequência**. Com mais de uma, a seleção aparece normalmente e, depois da escolha, o caminho continua até o destino escolhido.
+
+### Remoção de tópicos de aula em lote
+
+Na tela **Conteúdo Programado** da turma virtual, a tabela de tópicos de aula ganha uma coluna de seleção. Ao marcar o primeiro tópico, aparece logo abaixo da tabela uma barra com o botão **Remover selecionados (N)**, que some quando nenhum tópico está marcado. A barra fica fixa no rodapé da tela enquanto a tabela está visível, então o botão está sempre à mão, mesmo para os últimos tópicos da lista:
+
+- Marque os tópicos um a um, todos de uma vez pela caixa do cabeçalho, ou um intervalo com **Shift+clique** (clique no primeiro e, com Shift, no último).
+- Ao clicar no botão, um diálogo lista os tópicos selecionados e avisa que a remoção não pode ser desfeita e que os materiais vinculados a eles (arquivos, tarefas, fóruns…) também são removidos.
+- Confirmada a remoção, o progresso é exibido ("Removendo 3 de 12…"). O botão **Parar** termina a remoção em andamento e não inicia as seguintes.
+- A página é atualizada uma única vez, no final, com um aviso do resultado. Se alguma remoção falhar (por exemplo, sessão expirada), as seguintes não são feitas, e o aviso informa quantos tópicos foram removidos e em qual houve a falha.
+
+As remoções são feitas em segundo plano, com as mesmas requisições da lixeira de cada linha; o motivo dessa escolha está em [docs/adr/0001](docs/adr/0001-remocao-em-lote-por-requisicoes-em-segundo-plano.md).
 
 ### Privacidade na lista de frequência
 
@@ -93,11 +105,13 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── vinculos/          # Tela de seleção de vínculos
 │   ├── portal/            # Acesso direto ao Portal Docente
 │   ├── chamada/           # Atalhos para a chamada na turma virtual
+│   ├── topicos/           # Remoção de tópicos de aula em lote
 │   ├── frequencia/        # Privacidade na lista de frequência
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/
 │   ├── fakes/             # Implementações falsas das dependências externas
-│   └── suporte/           # Utilitários de teste (página de vínculos simulada, <dialog> no jsdom)
+│   └── suporte/           # Utilitários de teste (telas do SIGAA simuladas, <dialog> no jsdom)
+├── docs/adr/              # Registros de decisões de arquitetura
 ├── build.ts               # Script de build (esbuild)
 ├── vitest.config.ts
 └── tsconfig.json

@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import {
   confirmarComDialogo,
+  prepararDialogo,
   type PedidoConfirmacao,
 } from "../../src/comum/dialogo";
 
@@ -58,5 +59,23 @@ describe("confirmarComDialogo", () => {
     const resposta = confirmarComDialogo(PEDIDO);
     dialogoAberto().close();
     expect(await resposta).toBe(false);
+  });
+});
+
+describe("prepararDialogo", () => {
+  it("centraliza o diálogo apesar do CSS do SIGAA e escurece o fundo", () => {
+    const dialogo = document.createElement("dialog");
+    prepararDialogo(dialogo);
+    expect(dialogo.style.position).toBe("fixed");
+    expect(dialogo.style.margin).toBe("auto");
+    const estilo = document.getElementById("sigga-dialogo-estilo");
+    expect(estilo?.textContent).toContain("dialog.sigga-dialogo::backdrop");
+    expect(dialogo.classList.contains("sigga-dialogo")).toBe(true);
+  });
+
+  it("insere a folha de estilo uma única vez", () => {
+    prepararDialogo(document.createElement("dialog"));
+    prepararDialogo(document.createElement("dialog"));
+    expect(document.querySelectorAll("#sigga-dialogo-estilo")).toHaveLength(1);
   });
 });

@@ -10,7 +10,14 @@ export type Confirmador = (pedido: PedidoConfirmacao) => Promise<boolean>;
 const VALOR_CONFIRMAR = "confirmar";
 const VALOR_CANCELAR = "cancelar";
 
+// O CSS do SIGAA zera margens e posições; sem isso o <dialog> nativo vai para o canto
 const ESTILO_DIALOGO: Partial<CSSStyleDeclaration> = {
+  position: "fixed",
+  inset: "0",
+  margin: "auto",
+  height: "fit-content",
+  maxHeight: "90vh",
+  overflowY: "auto",
   maxWidth: "380px",
   padding: "20px 24px",
   border: "none",
@@ -18,7 +25,49 @@ const ESTILO_DIALOGO: Partial<CSSStyleDeclaration> = {
   boxShadow: "0 8px 32px rgba(0,0,0,.3)",
   fontFamily: "Arial, sans-serif",
   color: "#222",
+  background: "#fff",
 };
+
+const CLASSE_DIALOGO = "sigga-dialogo";
+const ID_ESTILO_DIALOGO = "sigga-dialogo-estilo";
+
+// ::backdrop não aceita estilo inline: o fundo escurecido precisa de uma folha de estilo
+const CSS_DIALOGO = `
+  @keyframes sigga-dialogo-surgir { from { opacity: 0; transform: translateY(8px); } }
+  @keyframes sigga-fundo-surgir { from { opacity: 0; } }
+  dialog.${CLASSE_DIALOGO} { animation: sigga-dialogo-surgir 180ms ease-out; }
+  dialog.${CLASSE_DIALOGO}::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    animation: sigga-fundo-surgir 180ms ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.${CLASSE_DIALOGO}, dialog.${CLASSE_DIALOGO}::backdrop { animation: none; }
+  }
+`;
+
+/**
+ * Dá a um `<dialog>` a aparência dos diálogos da extensão: centralizado, com
+ * fundo escurecido e entrada suave.
+ *
+ * @example
+ * const dialogo = document.createElement("dialog");
+ * prepararDialogo(dialogo);
+ * document.body.append(dialogo);
+ * dialogo.showModal();
+ */
+export function prepararDialogo(dialogo: HTMLDialogElement): void {
+  inserirEstiloDialogo(dialogo.ownerDocument);
+  dialogo.classList.add(CLASSE_DIALOGO);
+  Object.assign(dialogo.style, ESTILO_DIALOGO);
+}
+
+function inserirEstiloDialogo(documento: Document): void {
+  if (documento.getElementById(ID_ESTILO_DIALOGO)) return;
+  const estilo = documento.createElement("style");
+  estilo.id = ID_ESTILO_DIALOGO;
+  estilo.textContent = CSS_DIALOGO;
+  documento.head.append(estilo);
+}
 
 /**
  * `Confirmador` com um `<dialog>` modal nativo, que já traz fundo escurecido,
@@ -56,7 +105,7 @@ function aguardarFechamento(dialogo: HTMLDialogElement): Promise<boolean> {
 
 function montarDialogo(pedido: PedidoConfirmacao): HTMLDialogElement {
   const dialogo = document.createElement("dialog");
-  Object.assign(dialogo.style, ESTILO_DIALOGO);
+  prepararDialogo(dialogo);
   dialogo.append(
     criarTexto("h3", pedido.titulo, { margin: "0 0 10px", fontSize: "17px" }),
     criarTexto("p", pedido.mensagem, {
@@ -104,14 +153,38 @@ function criarBotao(
   const botao = document.createElement("button");
   botao.value = valor;
   botao.textContent = texto;
+  estilizarBotaoDialogo(botao, primario ? "primario" : "secundario");
+  return botao;
+}
+
+/** Papel visual de um botão de diálogo; "perigo" marca ações destrutivas. */
+export type VarianteBotao = "primario" | "secundario" | "perigo";
+
+const CORES_BOTAO: Record<VarianteBotao, Partial<CSSStyleDeclaration>> = {
+  primario: {
+    border: "1px solid #1b3a5c",
+    background: "#1b3a5c",
+    color: "#fff",
+  },
+  secundario: { border: "1px solid #999", background: "#fff", color: "#333" },
+  perigo: { border: "1px solid #b3261e", background: "#b3261e", color: "#fff" },
+};
+
+/**
+ * Aplica a aparência dos botões dos diálogos da extensão.
+ *
+ * @example
+ * estilizarBotaoDialogo(botaoRemover, "perigo");
+ */
+export function estilizarBotaoDialogo(
+  botao: HTMLButtonElement,
+  variante: VarianteBotao,
+): void {
   Object.assign(botao.style, {
     padding: "6px 14px",
     fontSize: "14px",
     borderRadius: "4px",
     cursor: "pointer",
-    border: primario ? "1px solid #1b3a5c" : "1px solid #999",
-    background: primario ? "#1b3a5c" : "#fff",
-    color: primario ? "#fff" : "#333",
+    ...CORES_BOTAO[variante],
   });
-  return botao;
 }

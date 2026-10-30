@@ -1,3 +1,4 @@
+import { encontrarItemMenuAva } from "../comum/menuAva";
 import { normalizarRotulo } from "../comum/texto";
 
 /**
@@ -35,11 +36,7 @@ function temLegenda(documento: Document, trecho: string): boolean {
 export function encontrarLinkLancarFrequencia(
   documento: Document,
 ): HTMLAnchorElement | undefined {
-  return [...documento.querySelectorAll<HTMLAnchorElement>("a")].find(
-    (link) =>
-      normalizarRotulo(link.querySelector(".itemMenu")?.textContent) ===
-      "lancar frequencia",
-  );
+  return encontrarItemMenuAva(documento, "lancar frequencia");
 }
 
 /**
