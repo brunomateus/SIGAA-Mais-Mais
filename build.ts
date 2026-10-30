@@ -10,6 +10,7 @@ const entryPoints: string[] = [
   "src/entradas/frequencia.ts",
   "src/entradas/chamada.ts",
   "src/entradas/topicos.ts",
+  "src/entradas/notas.ts",
 ];
 
 const options: esbuild.BuildOptions = {
