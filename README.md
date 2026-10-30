@@ -10,6 +10,7 @@ Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](ht
 - [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
 - [x] **Atalhos para a chamada:** a partir da página da turma, abre a chamada de hoje ou o calendário, pulando a seleção de subturma quando há apenas uma.
 - [x] **Remoção de tópicos de aula em lote:** na tela Conteúdo Programado, remove vários tópicos de aula de uma vez, com uma única atualização da página.
+- [x] **Colar notas da planilha:** na tela Lançar Notas, preenche as notas copiadas da sua planilha (Google Sheets, Excel, LibreOffice), para você revisar e salvar.
 - [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
@@ -52,6 +53,24 @@ Na tela **Conteúdo Programado** da turma virtual, a tabela de tópicos de aula 
 - A página é atualizada uma única vez, no final, com um aviso do resultado. Se alguma remoção falhar (por exemplo, sessão expirada), as seguintes não são feitas, e o aviso informa quantos tópicos foram removidos e em qual houve a falha.
 
 As remoções são feitas em segundo plano, com as mesmas requisições da lixeira de cada linha; o motivo dessa escolha está em [docs/adr/0001](docs/adr/0001-remocao-em-lote-por-requisicoes-em-segundo-plano.md).
+
+### Colar notas da planilha
+
+Na tela **Lançar Notas** da turma, o botão **Colar notas da planilha** aparece acima da tabela de alunos:
+
+1. Na sua planilha, selecione a coluna de matrículas e as colunas de notas, de preferência com a linha de títulos, e copie (Ctrl+C). As colunas podem estar em qualquer ordem e a planilha pode ter outras colunas, como o nome.
+2. Cole na caixa do diálogo (Ctrl+V) e clique em **Continuar**. A coluna de matrículas é encontrada sozinha.
+3. Confira a coluna da planilha escolhida para cada unidade e para a avaliação final. Títulos como "Unid. 1", "U1", "N1", "Nota 1" e "AF" já vêm associados. A prévia mostra cada nota que vai mudar ("7,0 → 8,0") e o que fica de fora: valores inválidos, matrículas que não estão na turma, matrículas repetidas na planilha e alunos sem linha na planilha.
+4. Clique em **Preencher**. Os campos alterados ficam destacados em amarelo, e um aviso acima da tabela resume o resultado.
+5. Revise e clique em **Salvar** no SIGAA. A extensão não salva nada nem usa o botão **Finalizar (Consolidar)**. Antes de salvar, **Desfazer preenchimento** devolve os valores anteriores.
+
+Regras do preenchimento:
+
+- O aluno é identificado pela matrícula. Uma matrícula repetida na planilha não é usada.
+- As notas aceitam vírgula ou ponto e são **truncadas** em uma casa decimal (7,39 vira 7,3). Texto, valores negativos ou acima de 10 não são preenchidos.
+- Célula vazia não apaga a nota que já está no SIGAA.
+- A nota da avaliação final só é preenchida para quem, depois das notas das unidades, o SIGAA coloca em avaliação final.
+- As notas copiadas são lidas apenas no navegador e não são guardadas pela extensão.
 
 ### Privacidade na lista de frequência
 
@@ -106,6 +125,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── portal/            # Acesso direto ao Portal Docente
 │   ├── chamada/           # Atalhos para a chamada na turma virtual
 │   ├── topicos/           # Remoção de tópicos de aula em lote
+│   ├── notas/             # Colar notas da planilha
 │   ├── frequencia/        # Privacidade na lista de frequência
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/

@@ -50,3 +50,13 @@ describe("manifest: remoção de tópicos de aula em lote", () => {
     ).toContain("topicos.js");
   });
 });
+
+describe("manifest: colar notas da planilha", () => {
+  it.each([
+    "https://si3.ufc.br/sigaa/ensino/consolidacao/detalhesTurma.jsf",
+    // Pelo menu da turma, a barra de endereço mostra o destino do formulário anterior
+    "https://si3.ufc.br/sigaa/ava/index.jsf",
+  ])("injeta notas.js em %s", (url) => {
+    expect(scriptsInjetadosEm(url)).toContain("notas.js");
+  });
+});

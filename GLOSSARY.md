@@ -34,6 +34,22 @@ _Avoid_: Conteúdo programado (é o nome da tela que lista os tópicos), aula
 Um arquivo, tarefa, fórum ou outro recurso vinculado a um tópico de aula; deixa de existir quando o tópico é removido.
 _Avoid_: Anexo, recurso
 
+**Unidade**:
+Uma das etapas em que o período letivo da turma é dividido; cada aluno recebe uma nota por unidade, e o número de unidades varia de turma para turma.
+_Avoid_: Bimestre, etapa, AP
+
+**Nota**:
+Um valor de 0 a 10, com uma casa decimal, atribuído a um aluno numa unidade ou na avaliação final.
+_Avoid_: Conceito, pontuação
+
+**Avaliação final**:
+A avaliação extra feita apenas pelo aluno cuja média nas unidades não basta para a aprovação direta.
+_Avoid_: Recuperação, AF, nota final
+
+**Planilha de notas**:
+A planilha do próprio docente, fora do SIGAA, de onde as notas são copiadas.
+_Avoid_: Pauta, diário
+
 **Chamada**:
 O registro de presença dos alunos de uma turma em uma data de aula.
 _Avoid_: Lançar frequência, frequência (para o ato), presença
