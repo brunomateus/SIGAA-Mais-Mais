@@ -34,8 +34,11 @@ export function criarEnvioDeFormulario(buscar: Buscar): EnviarFormulario {
   };
 }
 
+// O ArrayBuffer vai direto ao TextDecoder, sem uma visão Uint8Array: no Firefox ele
+// pertence à página, e o subarray dessa visão falhava com "Permission denied to
+// access property constructor", parando a remoção de tópicos no primeiro
 async function decodificar(resposta: Response): Promise<string> {
-  const bytes = new Uint8Array(await resposta.arrayBuffer());
+  const bytes = await resposta.arrayBuffer();
   const charset = detectarCharset(
     resposta.headers.get("content-type") ?? "",
     bytes,
@@ -51,11 +54,12 @@ async function decodificar(resposta: Response): Promise<string> {
  */
 export function detectarCharset(
   contentType: string,
-  bytes: Uint8Array,
+  bytes: BufferSource,
 ): string {
-  const inicio = new TextDecoder("latin1").decode(
-    bytes.subarray(0, BYTES_PARA_META),
-  );
+  // latin1 decodifica um caractere por byte: cortar o texto equivale a cortar os bytes
+  const inicio = new TextDecoder("latin1")
+    .decode(bytes)
+    .slice(0, BYTES_PARA_META);
   const rotulo =
     PADRAO_CHARSET.exec(contentType)?.[1] ?? PADRAO_CHARSET.exec(inicio)?.[1];
   return rotulo && ehCharsetConhecido(rotulo) ? rotulo : "utf-8";

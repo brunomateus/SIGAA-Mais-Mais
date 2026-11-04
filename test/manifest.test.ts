@@ -7,10 +7,19 @@ interface ContentScriptDeclarado {
   js?: string[];
 }
 
+interface ConfiguracaoFirefox {
+  id: string;
+  strict_min_version: string;
+  data_collection_permissions: { required: string[] };
+}
+
 // O Vitest roda a partir da raiz do projeto
 const MANIFEST = JSON.parse(
   readFileSync(join(process.cwd(), "public", "manifest.json"), "utf8"),
-) as { content_scripts: ContentScriptDeclarado[] };
+) as {
+  content_scripts: ContentScriptDeclarado[];
+  browser_specific_settings?: { gecko?: ConfiguracaoFirefox };
+};
 
 // Versão reduzida dos match patterns do Chrome: "*" casa qualquer trecho
 function casaPadrao(padrao: string, url: string): boolean {
@@ -58,5 +67,17 @@ describe("manifest: colar notas da planilha", () => {
     "https://si3.ufc.br/sigaa/ava/index.jsf",
   ])("injeta notas.js em %s", (url) => {
     expect(scriptsInjetadosEm(url)).toContain("notas.js");
+  });
+});
+
+describe("manifest: Firefox", () => {
+  // O ID liga as atualizações e os dados guardados: mudá-lo equivale a outra extensão
+  it("declara o ID fixo, a versão mínima e que não coleta dados", () => {
+    expect(MANIFEST.browser_specific_settings?.gecko).toEqual({
+      id: "sigga-mais-mais@brunomateus.github.io",
+      // A partir da 127, o Firefox concede na instalação as permissões dos content scripts MV3
+      strict_min_version: "128.0",
+      data_collection_permissions: { required: ["none"] },
+    });
   });
 });

@@ -1,6 +1,6 @@
 # Sigga++
 
-Extensão para Google Chrome que adiciona atalhos e ajustes ao [SIGAA da UFC](https://si3.ufc.br/sigaa/), com foco no fluxo de trabalho do docente.
+Extensão para Google Chrome e Firefox que adiciona atalhos e ajustes ao [SIGAA da UFC](https://si3.ufc.br/sigaa/), com foco no fluxo de trabalho do docente.
 
 > **Status:** em desenvolvimento.
 
@@ -81,7 +81,7 @@ A ocultação vem ativada por padrão. Para ver os indicadores (por exemplo, ao 
 ## Requisitos
 
 - [Node.js](https://nodejs.org/) 22.18 ou superior
-- Google Chrome (ou outro navegador baseado em Chromium)
+- Google Chrome (ou outro navegador baseado em Chromium) ou Firefox 128 ou superior, para computador
 
 ## Instalação
 
@@ -92,11 +92,22 @@ npm install
 npm run build
 ```
 
-Em seguida, carregue a extensão no navegador:
+Em seguida, carregue a pasta `dist/` no navegador.
+
+### Chrome
 
 1. Acesse `chrome://extensions`.
 2. Ative o **Modo do desenvolvedor**.
 3. Clique em **Carregar sem compactação** e selecione a pasta `dist/`.
+
+O Chrome exibe um aviso sobre a chave `browser_specific_settings` do manifest. Ela é usada só pelo Firefox, e o aviso pode ser ignorado.
+
+### Firefox
+
+1. Acesse `about:debugging#/runtime/this-firefox`.
+2. Clique em **Carregar extensão temporária…** e selecione o arquivo `dist/manifest.json`.
+
+A extensão temporária é removida quando o Firefox é fechado; repita os passos a cada nova sessão. Se as funcionalidades não aparecerem no SIGAA, confira em **Extensões** (ícone de quebra-cabeça) se o Sigga++ tem permissão para acessar `si3.ufc.br`.
 
 ## Desenvolvimento
 
@@ -109,8 +120,10 @@ Em seguida, carregue a extensão no navegador:
 | `npm run typecheck`    | Verifica os tipos com o compilador TypeScript |
 | `npm run format`       | Formata o código com o Prettier               |
 | `npm run format:check` | Verifica a formatação sem alterar arquivos    |
+| `npm run lint:firefox` | Valida `dist/` com as regras do Firefox       |
+| `npm run firefox`      | Abre um Firefox limpo com `dist/` carregada   |
 
-Depois de cada build, clique em **↻ Recarregar** no card da extensão em `chrome://extensions` e atualize a página do SIGAA.
+Depois de cada build, clique em **↻ Recarregar** no card da extensão em `chrome://extensions` (no Firefox, **Recarregar** em `about:debugging`) e atualize a página do SIGAA. O `npm run firefox` recarrega sozinho quando `dist/` muda.
 
 O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode `npm run build`.
 
@@ -147,7 +160,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 
 Cada ponto de entrada é empacotado como um arquivo autocontido (IIFE), pois content scripts não suportam módulos ES.
 
-Ajustes puramente visuais dispensam TypeScript: crie o arquivo em `public/<nome>.css` e registre-o no campo `css` de um content script do manifest, como em `frequencia.css`. O Chrome aplica o estilo antes da renderização da página.
+Ajustes puramente visuais dispensam TypeScript: crie o arquivo em `public/<nome>.css` e registre-o no campo `css` de um content script do manifest, como em `frequencia.css`. O navegador aplica o estilo antes da renderização da página.
 
 ## Sugestões e problemas
 
@@ -167,6 +180,8 @@ Antes de abrir, verifique se já não existe uma [issue parecida](https://github
 - [Vitest](https://vitest.dev/) + [jsdom](https://github.com/jsdom/jsdom)
 - [Prettier](https://prettier.io/)
 - [Chrome Extensions — Manifest V3](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+- [Firefox — Extensões (MDN)](https://developer.mozilla.org/pt-BR/docs/Mozilla/Add-ons/WebExtensions)
+- [web-ext](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/)
 
 ## Licença
 

@@ -1,8 +1,17 @@
 {
   "manifest_version": 3,
   "name": "Sigga++",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Atalhos e ajustes no SIGAA da UFC para o fluxo do docente.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sigga-mais-mais@brunomateus.github.io",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",

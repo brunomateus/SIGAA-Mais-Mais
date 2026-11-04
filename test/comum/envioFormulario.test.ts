@@ -57,6 +57,20 @@ describe("detectarCharset", () => {
     expect(detectarCharset("text/html", CONTEUDO_1252)).toBe("windows-1252");
   });
 
+  // Como chega da resposta, sem visão Uint8Array (ver decodificar)
+  it("lê a <meta> de um ArrayBuffer", () => {
+    expect(detectarCharset("text/html", CONTEUDO_1252.buffer)).toBe(
+      "windows-1252",
+    );
+  });
+
+  it("ignora a <meta> depois dos primeiros 2048 bytes", () => {
+    const tardia = new TextEncoder().encode(
+      " ".repeat(2048) + '<meta charset="windows-1252">',
+    );
+    expect(detectarCharset("text/html", tardia)).toBe("utf-8");
+  });
+
   it("cai para UTF-8 sem declaração ou com charset desconhecido", () => {
     expect(detectarCharset("text/html", new Uint8Array())).toBe("utf-8");
     expect(
