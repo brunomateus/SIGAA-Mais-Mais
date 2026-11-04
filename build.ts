@@ -1,4 +1,4 @@
-// build.ts — empacota src/ em dist/, a pasta carregada no Chrome
+// build.ts — empacota src/ em dist/, a pasta carregada no Chrome e no Firefox
 import * as esbuild from "esbuild";
 import { cpSync, rmSync } from "node:fs";
 
@@ -17,7 +17,7 @@ const options: esbuild.BuildOptions = {
   entryPoints,
   bundle: true,
   format: "iife", // content scripts não aceitam import: cada saída precisa ser autocontida
-  target: "chrome120",
+  target: ["chrome120", "firefox128"], // a mesma dist/ serve aos dois navegadores
   outdir: "dist",
   logLevel: "info",
 };
