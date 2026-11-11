@@ -52,6 +52,20 @@ describe("manifest: atalhos da chamada", () => {
   });
 });
 
+describe("manifest: atalho Nova notícia", () => {
+  it.each([
+    "https://si3.ufc.br/sigaa/ava/index.jsf",
+    "https://si3.ufc.br/sigaa/portais/docente/docente.jsf",
+  ])("injeta noticias.js depois de chamada.js em %s", (url) => {
+    const scripts = scriptsInjetadosEm(url);
+    // Os dois compartilham a barra de atalhos; a ordem de injeção é a ordem dos botões
+    expect(scripts.indexOf("noticias.js")).toBeGreaterThan(
+      scripts.indexOf("chamada.js"),
+    );
+    expect(scripts.indexOf("chamada.js")).toBeGreaterThanOrEqual(0);
+  });
+});
+
 describe("manifest: remoção de tópicos de aula em lote", () => {
   it("injeta topicos.js nas telas da turma virtual", () => {
     expect(

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Sigga++",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Atalhos e ajustes no SIGAA da UFC para o fluxo do docente.",
   "browser_specific_settings": {
     "gecko": {
@@ -42,7 +42,7 @@
         "*://si3.ufc.br/sigaa/portais/docente/*",
         "*://si3.ufc.br/sigaa/ensino/consolidacao/*"
       ],
-      "js": ["chamada.js", "topicos.js", "notas.js"],
+      "js": ["chamada.js", "noticias.js", "topicos.js", "notas.js"],
       "run_at": "document_idle"
     }
   ]

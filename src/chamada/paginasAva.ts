@@ -1,4 +1,5 @@
 import { encontrarItemMenuAva } from "../comum/menuAva";
+import { ehPaginaDaTurma } from "../comum/paginaTurma";
 import { normalizarRotulo } from "../comum/texto";
 
 /**
@@ -17,7 +18,7 @@ export type PaginaAva = "turma" | "subturma" | "calendario" | "outra";
 export function identificarPaginaAva(documento: Document): PaginaAva {
   if (temLegenda(documento, "selecionar sub-turma")) return "subturma";
   if (documento.querySelector("#calendario table")) return "calendario";
-  if (documento.querySelector("#conteudo #formAva")) return "turma";
+  if (ehPaginaDaTurma(documento)) return "turma";
   return "outra";
 }
 

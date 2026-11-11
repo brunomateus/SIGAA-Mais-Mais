@@ -11,7 +11,7 @@ import {
 
 const botoesDa = (documento: Document): HTMLButtonElement[] => [
   ...documento.querySelectorAll<HTMLButtonElement>(
-    "#sigga-barra-chamada button",
+    "#sigga-barra-atalhos button",
   ),
 ];
 
@@ -24,7 +24,7 @@ describe("inserirBotoesChamada", () => {
       "Chamada em outra data",
     ]);
     expect(documento.getElementById("conteudo")?.firstElementChild?.id).toBe(
-      "sigga-barra-chamada",
+      "sigga-barra-atalhos",
     );
   });
 

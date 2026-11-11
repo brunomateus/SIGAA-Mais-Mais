@@ -34,6 +34,10 @@ _Avoid_: Conteúdo programado (é o nome da tela que lista os tópicos), aula
 Um arquivo, tarefa, fórum ou outro recurso vinculado a um tópico de aula; deixa de existir quando o tópico é removido.
 _Avoid_: Anexo, recurso
 
+**Notícia**:
+Um aviso que o docente publica na turma virtual para os alunos da turma.
+_Avoid_: Aviso, comunicado, mensagem
+
 **Unidade**:
 Uma das etapas em que o período letivo da turma é dividido; cada aluno recebe uma nota por unidade, e o número de unidades varia de turma para turma.
 _Avoid_: Bimestre, etapa, AP
