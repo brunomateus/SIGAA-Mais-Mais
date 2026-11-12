@@ -58,7 +58,7 @@ describe("FluxoChamada na página da turma", () => {
   it("mostra os botões de chamada", () => {
     const turma = novaAba().abrir(montarPaginaTurma());
     expect(
-      turma.documento.getElementById("sigga-barra-chamada"),
+      turma.documento.getElementById("sigga-barra-atalhos"),
     ).not.toBeNull();
   });
 
@@ -91,7 +91,7 @@ describe("FluxoChamada na página da turma", () => {
 
   it("não mostra os botões fora da página da turma", () => {
     const forum = novaAba().abrir(montarOutraPaginaAva());
-    expect(forum.documento.getElementById("sigga-barra-chamada")).toBeNull();
+    expect(forum.documento.getElementById("sigga-barra-atalhos")).toBeNull();
   });
 });
 

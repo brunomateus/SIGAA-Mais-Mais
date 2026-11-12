@@ -9,6 +9,7 @@ const entryPoints: string[] = [
   "src/entradas/paginaInicial.ts",
   "src/entradas/frequencia.ts",
   "src/entradas/chamada.ts",
+  "src/entradas/noticias.ts",
   "src/entradas/topicos.ts",
   "src/entradas/notas.ts",
 ];

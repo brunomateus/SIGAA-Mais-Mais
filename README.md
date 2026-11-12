@@ -9,6 +9,7 @@ Extensão para Google Chrome e Firefox que adiciona atalhos e ajustes ao [SIGAA 
 - [x] **Vínculo favorito:** marca um vínculo como favorito e o seleciona automaticamente no login.
 - [x] **Acesso direto ao Portal Docente:** após o login, pula a página inicial e abre o Portal do Docente.
 - [x] **Atalhos para a chamada:** a partir da página da turma, abre a chamada de hoje ou o calendário, pulando a seleção de subturma quando há apenas uma.
+- [x] **Nova notícia:** a partir da página da turma, abre direto o cadastro de notícia, sem passar pela listagem.
 - [x] **Remoção de tópicos de aula em lote:** na tela Conteúdo Programado, remove vários tópicos de aula de uma vez, com uma única atualização da página.
 - [x] **Colar notas da planilha:** na tela Lançar Notas, preenche as notas copiadas da sua planilha (Google Sheets, Excel, LibreOffice), para você revisar e salvar.
 - [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
@@ -42,6 +43,12 @@ Na página de uma turma virtual, dois botões aparecem acima das notícias e dos
 - **Chamada em outra data:** abre o calendário de chamada para escolher a data.
 
 Quando a turma tem uma única subturma, a seleção de subturma é feita automaticamente, inclusive ao usar o menu **Alunos → Lançar Frequência**. Com mais de uma, a seleção aparece normalmente e, depois da escolha, o caminho continua até o destino escolhido.
+
+### Nova notícia
+
+Na página de uma turma virtual, o botão **Nova notícia** aparece ao lado dos atalhos da chamada e abre direto o formulário de cadastro de notícia. A listagem de notícias é consultada em segundo plano, porque o SIGAA só abre o cadastro a partir dela, mas não é exibida.
+
+Se o cadastro não puder ser aberto (por exemplo, com a sessão expirada), um aviso aparece abaixo dos botões e você continua na página da turma; nesse caso, use o item **Notícias** do menu.
 
 ### Remoção de tópicos de aula em lote
 
@@ -137,6 +144,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── vinculos/          # Tela de seleção de vínculos
 │   ├── portal/            # Acesso direto ao Portal Docente
 │   ├── chamada/           # Atalhos para a chamada na turma virtual
+│   ├── noticias/          # Atalho Nova notícia na turma virtual
 │   ├── topicos/           # Remoção de tópicos de aula em lote
 │   ├── notas/             # Colar notas da planilha
 │   ├── frequencia/        # Privacidade na lista de frequência
