@@ -14,6 +14,10 @@ _Avoid_: Vínculo padrão, vínculo preferido
 
 ## Turmas e frequência
 
+**Componente curricular**:
+Uma disciplina do currículo, identificada por um código (ex.: QXD0253); pode ser oferecido em várias turmas no mesmo período.
+_Avoid_: Disciplina, unidade curricular, matéria
+
 **Turma**:
 A turma virtual de um componente curricular, onde o docente acompanha alunos e aulas.
 _Avoid_: Disciplina, classe
@@ -57,3 +61,17 @@ _Avoid_: Pauta, diário
 **Chamada**:
 O registro de presença dos alunos de uma turma em uma data de aula.
 _Avoid_: Lançar frequência, frequência (para o ato), presença
+
+## Avaliação institucional
+
+**Avaliação institucional**:
+O período em que o docente avalia as condições do exercício da docência e cada uma das suas turmas.
+_Avoid_: Avaliação docente, CPA
+
+**Autoavaliação do docente**:
+O questionário em que o docente avalia a própria atuação numa turma; há uma por turma, mesmo entre turmas do mesmo componente curricular.
+_Avoid_: Avaliação do docente, autoavaliação da turma
+
+**Avaliação do alunado**:
+O questionário em que o docente avalia os alunos de uma turma.
+_Avoid_: Avaliação dos alunos, avaliação discente

@@ -1,3 +1,4 @@
+import { destacarPreenchido, removerDestaque } from "../comum/destaque";
 import type {
   AlteracaoDeNota,
   PlanoDePreenchimento,
@@ -10,11 +11,6 @@ export interface ResultadoPreenchimento {
   foraDaAvaliacaoFinal: AlteracaoDeNota[];
   desfazer(): void;
 }
-
-const DESTAQUE: Partial<CSSStyleDeclaration> = {
-  backgroundColor: "#fff59d",
-  outline: "2px solid #f9a825",
-};
 
 /**
  * Escreve as notas do plano nos campos do SIGAA, sem salvar. Cada escrita dispara
@@ -61,12 +57,12 @@ function registrarValores(
 function escrever({ campo, nova }: AlteracaoDeNota): void {
   campo.value = nova;
   recalcular(campo);
-  Object.assign(campo.style, DESTAQUE);
+  destacarPreenchido(campo);
 }
 
 function restaurar(valores: Map<HTMLInputElement, string>): void {
   for (const [campo, valor] of valores) {
-    Object.assign(campo.style, { backgroundColor: "", outline: "" });
+    removerDestaque(campo);
     campo.value = valor;
     recalcular(campo);
   }
