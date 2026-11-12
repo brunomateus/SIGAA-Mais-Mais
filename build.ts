@@ -12,6 +12,7 @@ const entryPoints: string[] = [
   "src/entradas/noticias.ts",
   "src/entradas/topicos.ts",
   "src/entradas/notas.ts",
+  "src/entradas/autoavaliacao.ts",
 ];
 
 const options: esbuild.BuildOptions = {

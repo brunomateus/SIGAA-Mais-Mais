@@ -12,6 +12,7 @@ Extensão para Google Chrome e Firefox que adiciona atalhos e ajustes ao [SIGAA 
 - [x] **Nova notícia:** a partir da página da turma, abre direto o cadastro de notícia, sem passar pela listagem.
 - [x] **Remoção de tópicos de aula em lote:** na tela Conteúdo Programado, remove vários tópicos de aula de uma vez, com uma única atualização da página.
 - [x] **Colar notas da planilha:** na tela Lançar Notas, preenche as notas copiadas da sua planilha (Google Sheets, Excel, LibreOffice), para você revisar e salvar.
+- [x] **Repetir a autoavaliação do docente:** na avaliação institucional, preenche a autoavaliação de uma turma com as respostas dadas em outra, para você revisar e salvar.
 - [x] **Privacidade na lista de frequência:** oculta os indicadores de necessidades especiais ao lado do nome dos alunos.
 
 ## Uso
@@ -78,6 +79,21 @@ Regras do preenchimento:
 - Célula vazia não apaga a nota que já está no SIGAA.
 - A nota da avaliação final só é preenchida para quem, depois das notas das unidades, o SIGAA coloca em avaliação final.
 - As notas copiadas são lidas apenas no navegador e não são guardadas pela extensão.
+
+### Repetir a autoavaliação do docente
+
+Na avaliação institucional, a autoavaliação do docente é preenchida uma vez por turma, mesmo quando as respostas são iguais.
+
+1. Preencha a autoavaliação de uma turma e clique em **Salvar Formulário de Avaliação**. Com todas as perguntas respondidas, a extensão guarda as respostas e a turma de origem.
+2. Ao abrir a autoavaliação de outra turma, clique em **Preencher com as respostas de …**. As perguntas preenchidas ficam destacadas em amarelo, e um resumo indica as que precisam ser respondidas à mão.
+3. Revise e clique em **Salvar Formulário de Avaliação**.
+
+Regras:
+
+- A extensão nunca salva a autoavaliação nem clica em **Finalizar Avaliação Institucional**.
+- Só a última autoavaliação salva fica guardada, no próprio navegador; nada é enviado a outro servidor. Use **Esquecer respostas guardadas** para apagá-la.
+- A questão optativa também é copiada; edite-a se ela não servir para a outra turma.
+- A avaliação do alunado e as avaliações das condições de exercício da docência continuam sendo preenchidas normalmente.
 
 ### Privacidade na lista de frequência
 
@@ -147,6 +163,7 @@ O modo `watch` não copia `public/` de novo. Se alterar o `manifest.json`, rode 
 │   ├── noticias/          # Atalho Nova notícia na turma virtual
 │   ├── topicos/           # Remoção de tópicos de aula em lote
 │   ├── notas/             # Colar notas da planilha
+│   ├── autoavaliacao/     # Repetir a autoavaliação do docente
 │   ├── frequencia/        # Privacidade na lista de frequência
 │   └── popup/             # Popup da extensão
 ├── test/                  # Testes, espelhando a estrutura de src/

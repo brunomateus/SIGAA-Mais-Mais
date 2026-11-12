@@ -66,6 +66,16 @@ describe("manifest: atalho Nova notícia", () => {
   });
 });
 
+describe("manifest: repetir a autoavaliação do docente", () => {
+  it.each([
+    "https://si3.ufc.br/sigaa/avaliacao/lista_dimensoes/docente_lista_turmas_dimensoes.jsf",
+    // A barra de endereço mostra o destino do formulário anterior
+    "https://si3.ufc.br/sigaa/avaliacao/apresentacao/introducao.jsf",
+  ])("injeta autoavaliacao.js em %s", (url) => {
+    expect(scriptsInjetadosEm(url)).toContain("autoavaliacao.js");
+  });
+});
+
 describe("manifest: remoção de tópicos de aula em lote", () => {
   it("injeta topicos.js nas telas da turma virtual", () => {
     expect(
